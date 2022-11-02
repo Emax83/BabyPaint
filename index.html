@@ -1,0 +1,115 @@
+<!Doctype html>
+<html lang="it">
+<head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="Author" content="Emanuele">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Baby Paint</title>
+
+    <link rel="icon" href="images/paint.ico">
+
+    <!--
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css" integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.min.js" integrity="sha512-5BqtYqlWfJemW5+v+TZUs22uigI8tXeVah5S/1Z6qBLVO7gakAOtkOzUtgq6dsIo5c0NJdmGPs0H9I+2OHUHVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    -->
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="scripts.js"></script>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <button class="btn" id="btnNuovo" href=""><img src="images/paint.png" style="width: 64px;"></button>
+            <button class="btn" id="btnApri"><img src="images/open.png" style="width: 64px;"/></button>
+            <button class="btn" id="btnSalva"><img src="images/save.png" style="width: 64px;"/></button>
+            <button class="btn" id="btnMeno">
+                <img src="images/minus.png"  style="width: 64px;"/>
+            </button>
+            <button class="btn">
+            <label style="font-size: 3rem;" id="lblSize">10</label>
+            </button>
+            <button class="btn" id="btnPiu">
+                <img src="images/plus.png"  style="width: 64px;"/>
+            </button>
+            <div class="d-none">
+                <input type="file" id="fileUpload" />
+            </div>
+            <div id="divPos" style="display: inline-block;"></div>
+        </nav>
+    </header>
+    <canvas id="canvasPaint" width="200" height="200"></canvas>
+    <footer>
+        <div class="d-flex">
+                <button type="button" class="btn btn-ink selected" style="background-color: black;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label class="text-white">NERO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: gray;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>GRIGIO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: white;">
+                    <img src="images/ink.png" class="img-ink"/>
+                    <label>BIANCO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: yellow;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>GIALLO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: orange;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>ARANCIONE</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: red;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>ROSSO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: fuchsia;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>FUCHSIA</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: pink;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>ROSA</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: #5C2E91;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>VIOLA</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: darkblue;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>BLU SCURO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: blue;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>BLU</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: lightblue;">
+                    <img src="images/ink.png"  class="img-ink" />
+                    <label>AZZURRO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: greenyellow;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>VERDE CHIARO</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: green;">
+                    <img src="images/ink.png" class="img-ink" />
+                    <label>VERDE</label>
+                </button>
+                <button type="button" class="btn btn-ink" style="background-color: maroon;">
+                    <img src="images/ink.png"  class="img-ink" />
+                    <label>MARRONE</label>
+                </button>
+                <button type="button" class="btn btn-ink" id="btnColors" style="background-color: white;">
+                    <img src="images/colors.png"  class="img-ink" />
+                    <input type="color" id="inputColor" />
+                </button>
+       </div>
+    </footer>
+</body>
+</html>
