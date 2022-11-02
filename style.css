@@ -1,0 +1,145 @@
+* {
+    box-sizing:border-box;
+}
+
+*,*:before,*:after{box-sizing:inherit;}
+html,body
+{
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size:15pt;
+    line-height:1.5;
+    background-color: #fff;
+    color: rgb(39, 39, 39);
+}
+    html
+    {
+        overflow-x:hidden;
+    }
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 0px;
+}
+
+
+main{
+    position: fixed;
+    width: 100%;
+    height: -webkit-fill-available;
+    margin-top: 100px;
+    margin-bottom: 76px;
+    background-color: #fff;
+    background-size: cover;
+}
+
+canvas{
+    border: solid 1px black;
+    position:fixed;
+    top: 120px;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 0px;
+    height: 130px;
+    overflow:auto;
+}
+
+img{
+    width: 100%;
+    height: auto;
+}
+
+input, select{
+    width: 100%;
+}
+textarea{
+    width: 100%;
+    resize: vertical;
+}
+
+button > * {
+    white-space: normal;
+}
+
+label{display: inline-block;cursor: inherit;}
+
+.border{
+    border: solid 1px #ccc;
+    border-radius: 0px;
+}
+
+.btn{
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #fff;
+    padding: 10px;
+}
+
+    .btn-ink{
+        font-size: initial;
+        margin: 0px;
+        padding: 10px;
+        border: solid 1px #ccc;
+        border-radius: 0px;
+        cursor: pointer;
+        background-color: rgb(231, 231, 231);
+        text-align: center;
+        min-width: 100px;
+        overflow: hidden;
+        height: 75px;
+        align-self: flex-end;
+        /* border-radius: 40%; */
+        margin: 5px;
+    }
+
+    .btn-ink.selected{
+        height: 105px;
+    }
+
+    .img-ink{
+        width: 48px;
+        height: auto;
+        display: block;
+        margin: 5px auto;
+    }
+
+    .lbl-size{
+        font-size: initial;
+        margin: 0px;
+        padding: 10px;
+        border: solid 1px #ccc;
+        border-radius: 0px;
+        background-color: rgb(231, 231, 231);
+        display: inline-block;
+    }
+
+    .text-white{
+        color: #fff;
+    }
+
+.d-flex{
+    display: flex;
+    vertical-align: bottom;
+}
+
+.d-none{
+    display: none;
+}
