@@ -95,6 +95,7 @@ var canvas = null;
 var context = null;
 var startPoint={x:0,y:0}
 var mouseDown = false;
+var isFullScreen = false;
 
 function ChangeSize(value){
     var min=10;
@@ -185,4 +186,33 @@ function Disegna(e){
         context.closePath();
         startPoint = endPoint;
     }
+}
+
+
+
+/* View in fullscreen */
+function openFullscreen() {
+	
+	var elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+  isFullScreen = true;
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+	var elem = document.documentElement;
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+  isFullScreen = false;
 }
