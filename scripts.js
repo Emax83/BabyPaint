@@ -31,20 +31,21 @@ $(document).ready(function(){
     $("#btnPiu").click(function(){
         ChangeSize(+10);
     });
+
+    $("#inputColor").on("change",function(){
+        CambiaColore(this.value);
+    });
+
     $("#btnColors").click(function(){
+        $(".btn-ink").removeClass("selected");
         var input = document.getElementById('inputColor');
-        input.addEventListener("change",function(){
-            //currentColor = this.value;
-            //console.log(currentColor);
-            CambiaColore(this.value);
-        });
         input.click();
     });
 
     $(".btn-ink").click(function(){
         $(".btn-ink").removeClass("selected");
         $(this).addClass("selected");
-        CambiaColore($(this).css("background-color"));
+        CambiaColore(this.style.backgroundColor);
     });
 
     canvas.addEventListener("mouseout",function(e){
@@ -53,18 +54,6 @@ $(document).ready(function(){
 
     canvas.addEventListener("mouseup",function(e){
         mouseDown=false;
-    });
-
-    canvas.addEventListener("touchend",function(e){
-        mouseDown=false;
-    });
-
-    canvas.addEventListener("touchstart",function(e){
-        startPoint.x = e.changedTouches[0].clientX;
-        startPoint.y = e.changedTouches[0].clientY;
-        mouseDown=true;
-        Disegna(e);
-        //console.log(startPoint);
     });
 
     canvas.addEventListener("mousedown",function(e){
@@ -78,16 +67,29 @@ $(document).ready(function(){
     canvas.addEventListener("mousemove",function(e){
         Disegna(e);
     });
+	
+	
+	canvas.addEventListener("touchstart",function(e){
+        startPoint.x = e.changedTouches[0].clientX;
+        startPoint.y = e.changedTouches[0].clientY - $("header").height();
+        mouseDown=true;
+        Disegna(e);
+        //console.log(startPoint);
+    });
 
     canvas.addEventListener("touchmove",function(e){
         Disegna(e);
+    });
+	    
+	canvas.addEventListener("touchend",function(e){
+        mouseDown=false;
     });
    
 
 });
 
 
-var currentColor = "#000";
+var currentColor = "#000000";
 var currentSize = 20;
 var canvas = null;
 var context = null;
@@ -105,8 +107,10 @@ function ChangeSize(value){
 }
 
 function ResizeCanvas(){
-    canvas.width = window.innerWidth - 5;
-    canvas.height = window.innerHeight - 260;
+	var h = $("header").height() + $("footer").height();
+    canvas.width = window.innerWidth - 2;
+    canvas.height = window.innerHeight - 4 - h;
+	canvas.style.top = $("header").height();
 }
 
 function Apri(inputUpload){
@@ -163,11 +167,13 @@ function CambiaColore(color){
 
 //https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
 function Disegna(e){
-    if((e.type =='touchmove' && e.changedTouches.length > 0) || (e.type == "mousemove" && e.buttons > 0))
+    if(mouseDown == true)
     {
+		var source = e.touches ? e.touches[0] : e;
+
         var endPoint = {
-            x:e.clientX - canvas.getBoundingClientRect().left, 
-            y: e.clientY - canvas.getBoundingClientRect().top
+            x: source.offsetX ?? source.clientX,
+			y: source.offsetY ?? (source.clientY - $("header").height())
         }
         context.beginPath();
         context.lineCap = 'round';

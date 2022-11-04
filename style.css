@@ -29,6 +29,7 @@ header{
     left: 0;
     width: 100%;
     font-size: 0px;
+    height: auto;
 }
 
 
@@ -45,7 +46,7 @@ main{
 canvas{
     border: solid 1px black;
     position:fixed;
-    top: 120px;
+    top: 90px;
     left: 0;
     background-size: cover;
     background-position: center;
@@ -57,7 +58,7 @@ footer{
     left: 0;
     width: 100%;
     font-size: 0px;
-    height: 130px;
+    /* height: 155px; */
     overflow:auto;
 }
 
@@ -78,7 +79,7 @@ button > * {
     white-space: normal;
 }
 
-label{display: inline-block;cursor: inherit;}
+label{display: inline-block;cursor: inherit; font-size:initial;}
 
 .border{
     border: solid 1px #ccc;
@@ -86,11 +87,12 @@ label{display: inline-block;cursor: inherit;}
 }
 
 .btn{
-    margin: 10px;
+    margin: 0 20px;
     cursor: pointer;
     border: none;
-    background-color: #fff;
+    background-color: transparent;
     padding: 10px;
+    display: inline-block;
 }
 
     .btn-ink{
@@ -102,16 +104,14 @@ label{display: inline-block;cursor: inherit;}
         cursor: pointer;
         background-color: rgb(231, 231, 231);
         text-align: center;
-        min-width: 100px;
         overflow: hidden;
         height: 75px;
         align-self: flex-end;
-        /* border-radius: 40%; */
-        margin: 5px;
+        flex:1;
     }
 
     .btn-ink.selected{
-        height: 105px;
+        height: 100px;
     }
 
     .img-ink{

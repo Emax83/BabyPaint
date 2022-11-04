@@ -30,9 +30,7 @@
             <button class="btn" id="btnMeno">
                 <img src="images/minus.png"  style="width: 64px;"/>
             </button>
-            <button class="btn">
-            <label style="font-size: 3rem;" id="lblSize">10</label>
-            </button>
+            <label id="lblSize">10</label>
             <button class="btn" id="btnPiu">
                 <img src="images/plus.png"  style="width: 64px;"/>
             </button>
@@ -45,7 +43,7 @@
     <canvas id="canvasPaint" width="200" height="200"></canvas>
     <footer>
         <div class="d-flex">
-                <button type="button" class="btn btn-ink selected" style="background-color: black;">
+                <button type="button" class="btn btn-ink selected" style="background-color: #000000;">
                     <img src="images/ink.png" class="img-ink" />
                     <label class="text-white">NERO</label>
                 </button>
@@ -107,7 +105,7 @@
                 </button>
                 <button type="button" class="btn btn-ink" id="btnColors" style="background-color: white;">
                     <img src="images/colors.png"  class="img-ink" />
-                    <input type="color" id="inputColor" />
+                    <input type="color" id="inputColor" style="display:none;" />
                 </button>
        </div>
     </footer>
