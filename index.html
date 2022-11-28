@@ -24,21 +24,21 @@
 <body>
     <header>
         <nav>
-            <button class="btn" id="btnNuovo" href=""><img src="images/paint.png" style="width: 64px;"></button>
-            <button class="btn" id="btnApri"><img src="images/open.png" style="width: 64px;"/></button>
-            <button class="btn" id="btnSalva"><img src="images/save.png" style="width: 64px;"/></button>
+            <button class="btn" id="btnNuovo" href=""><img class="btn-img" src="images/paint.png"></button>
+            <button class="btn" id="btnApri"><img class="btn-img" src="images/open.png" /></button>
+            <button class="btn" id="btnSalva"><img class="btn-img" src="images/save.png"/></button>
             <button class="btn" id="btnMeno">
-                <img src="images/minus.png"  style="width: 64px;"/>
+                <img src="images/minus.png" class="btn-img"/>
             </button>
-            <label id="lblSize">10</label>
+            <label id="lblSize" class="lbl-size">10</label>
             <button class="btn" id="btnPiu">
-                <img src="images/plus.png"  style="width: 64px;"/>
+                <img src="images/plus.png" class="btn-img"/>
             </button>
             <div class="d-none">
                 <input type="file" id="fileUpload" />
             </div>
-            <button class="btn" id="btnExpand" style="float:right;">
-                <img src="images/expand.png"  style="width: 64px;"/>
+            <button class="btn" id="btnExpand" style="position: absolute;right: 0px;">
+                <img src="images/expand.png" class="btn-img"/>
             </button>
         </nav>
     </header>
@@ -47,63 +47,63 @@
         <div class="d-flex">
                 <button type="button" class="btn btn-ink selected" style="background-color: #000000;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label class="text-white">NERO</label>
+                    <label class="lbl-ink text-white">NERO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: gray;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>GRIGIO</label>
+                    <label class="lbl-ink">GRIGIO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: white;">
                     <img src="images/ink.png" class="img-ink"/>
-                    <label>BIANCO</label>
+                    <label class="lbl-ink">BIANCO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: yellow;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>GIALLO</label>
+                    <label class="lbl-ink">GIALLO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: orange;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>ARANCIONE</label>
+                    <label class="lbl-ink">ARANCIONE</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: red;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>ROSSO</label>
+                    <label class="lbl-ink">ROSSO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: fuchsia;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>FUCHSIA</label>
+                    <label class="lbl-ink">FUCHSIA</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: pink;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>ROSA</label>
+                    <label class="lbl-ink">ROSA</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: #5C2E91;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>VIOLA</label>
+                    <label class="lbl-ink">VIOLA</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: darkblue;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>BLU SCURO</label>
+                    <label class="lbl-ink">BLU SCURO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: blue;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>BLU</label>
+                    <label class="lbl-ink">BLU</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: lightblue;">
                     <img src="images/ink.png"  class="img-ink" />
-                    <label>AZZURRO</label>
+                    <label class="lbl-ink">AZZURRO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: greenyellow;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>VERDE CHIARO</label>
+                    <label class="lbl-ink">VERDE CHIARO</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: green;">
                     <img src="images/ink.png" class="img-ink" />
-                    <label>VERDE</label>
+                    <label class="lbl-ink">VERDE</label>
                 </button>
                 <button type="button" class="btn btn-ink" style="background-color: maroon;">
                     <img src="images/ink.png"  class="img-ink" />
-                    <label>MARRONE</label>
+                    <label class="lbl-ink">MARRONE</label>
                 </button>
                 <button type="button" class="btn btn-ink" id="btnColors" style="background-color: white;">
                     <img src="images/colors.png"  class="img-ink" />
