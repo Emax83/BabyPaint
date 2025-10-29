@@ -2,7 +2,7 @@
 
 Un'applicazione di disegno semplice e divertente pensata per i bambini, ottimizzata per tablet in modalità landscape.
 
-Provala online!: https://baby-paint.vercel.app/
+[![Vedi Online](https://img.shields.io/badge/🌐_Vedi_Online-667eea?style=for-the-badge)](https://baby-paint.vercel.app/)
 
 ![BabyPaint Screenshot](screenshot.png)
 
