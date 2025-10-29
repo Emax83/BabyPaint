@@ -1,115 +1,696 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>BabyPaint</title>
     
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta charset="utf-8">
-    <meta name="Author" content="Emanuele">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="emax83dev - Emanuele Mignano">
 
-    <title>Baby Paint</title>
+    <link rel="icon" type="image/png" href="imgases/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/images/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="BabyPaint" />
+    <link rel="manifest" href="site.webmanifest" />
 
-    <link rel="icon" href="images/paint.ico">
 
-    <!--
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css" integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.min.js" integrity="sha512-5BqtYqlWfJemW5+v+TZUs22uigI8tXeVah5S/1Z6qBLVO7gakAOtkOzUtgq6dsIo5c0NJdmGPs0H9I+2OHUHVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: none;
+        }
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="scripts.js"></script>
+        body {
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            overflow: hidden;
+            background: #f0f0f0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-new {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-save {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-grid {
+            background: #ffd43b;
+            color: #333;
+        }
+
+        .btn-size {
+            background: white;
+            color: #333;
+            padding: 0.75rem;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brush-preview {
+            width: 4rem;
+            height: 3rem;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .brush-circle {
+            background: #333;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 80px;
+            margin-bottom: 80px;
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+            background-color: #fff;
+        }
+
+        #drawingCanvas {
+            background: rgba(255, 255, 255, 0);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: crosshair;
+            touch-action: none;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .grid-canvas {
+            /*position: absolute;*/
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .color-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0.75rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+
+        .color-btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 3px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .color-btn:hover, .color-btn.active {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .color-btn.active {
+            border-width: 4px;
+            border-color: #ffd43b;
+        }
+
+        .eraser-btn {
+            background: white;
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 3px solid #333;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .eraser-btn:hover, .eraser-btn.active {
+            transform: scale(1.15);
+            border-color: #ffd43b;
+            border-width: 4px;
+        }
+
+        .multicolor-btn {
+            background: linear-gradient(45deg, red, yellow, lime, cyan, blue, magenta, red);
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 3px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 0 0 3px black;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .multicolor-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: #667eea;
+        }
+
+        .close-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+            gap: 0.5rem;
+            max-width: 600px;
+        }
+
+        .color-grid-item {
+            width: 3rem;
+            height: 3rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .color-grid-item:hover {
+            transform: scale(1.1);
+            border-color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .toolbar {
+                padding: 0.5rem;
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <button class="btn" id="btnNuovo" href=""><img class="btn-img" src="images/paint.png"></button>
-            <button class="btn" id="btnApri"><img class="btn-img" src="images/open.png" /></button>
-            <button class="btn" id="btnSalva"><img class="btn-img" src="images/save.png"/></button>
-            <button class="btn" id="btnMeno">
-                <img src="images/minus.png" class="btn-img"/>
-            </button>
-            <label id="lblSize" class="lbl-size">10</label>
-            <button class="btn" id="btnPiu">
-                <img src="images/plus.png" class="btn-img"/>
-            </button>
-            <div class="d-none">
-                <input type="file" id="fileUpload" />
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="logo"><img src="paint.ico" width="32"></div>
+        <button class="btn btn-new" onclick="clearCanvas()">
+            <i class="bi bi-file-earmark-plus"></i> Nuovo
+        </button>
+        <button class="btn btn-save" onclick="saveDrawing()">
+            <i class="bi bi-download"></i> Salva
+        </button>
+        <button class="btn btn-grid" onclick="toggleGrid()">
+            <i class="bi bi-grid-3x3"></i> <span id="gridText">Griglia No</span>
+        </button>
+        <button class="btn btn-size" onclick="decreaseBrushSize()">
+            <i class="bi bi-dash-lg"></i>
+        </button>
+        <div class="brush-preview">
+            <div class="brush-circle" id="brushPreview"></div>
+        </div>
+        <button class="btn btn-size" onclick="increaseBrushSize()">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
+
+    <!-- Canvas Area -->
+    <div class="canvas-container" id="canvasContainer">
+        <canvas id="gridCanvas" class="grid-canvas"></canvas>
+        <canvas id="drawingCanvas"></canvas>
+    </div>
+
+    <!-- Color Bar -->
+    <div class="color-bar">
+        <div class="eraser-btn" onclick="selectEraser()" id="eraserBtn">
+            <i class="bi bi-eraser"></i>
+        </div>
+        <div class="color-btn active" style="background: black;" onclick="selectColor('black')" data-color="black"></div>
+        <div class="color-btn" style="background: gray;" onclick="selectColor('gray')" data-color="gray"></div>
+        <div class="color-btn" style="background: white; border-color: #333;" onclick="selectColor('white')" data-color="white"></div>
+        <div class="color-btn" style="background: yellow;" onclick="selectColor('yellow')" data-color="yellow"></div>
+        <div class="color-btn" style="background: orange;" onclick="selectColor('orange')" data-color="orange"></div>
+        <div class="color-btn" style="background: red;" onclick="selectColor('red')" data-color="red"></div>
+        <div class="color-btn" style="background: brown;" onclick="selectColor('brown')" data-color="brown"></div>
+        <div class="color-btn" style="background: green;" onclick="selectColor('green')" data-color="green"></div>
+        <div class="color-btn" style="background: purple;" onclick="selectColor('purple')" data-color="purple"></div>
+        <div class="color-btn" style="background: blue;" onclick="selectColor('blue')" data-color="blue"></div>
+        <div class="color-btn" style="background: lightblue;" onclick="selectColor('lightblue')" data-color="lightblue"></div>
+        <div class="multicolor-btn" onclick="openColorPicker()">
+            <i class="bi bi-palette"></i>
+        </div>
+    </div>
+
+    <!-- Color Picker Modal -->
+    <div class="modal" id="colorModal">
+        <div class="modal-content">
+            <!--
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeColorPicker()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
             </div>
-            <button class="btn" id="btnExpand" style="position: absolute;right: 0px;">
-                <img src="images/expand.png" class="btn-img"/>
-            </button>
-        </nav>
-    </header>
-    <canvas id="canvasPaint" width="200" height="200"></canvas>
-    <footer>
-        <div class="d-flex">
-                <button type="button" class="btn btn-ink selected" style="background-color: #000000;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink text-white">NERO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: gray;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">GRIGIO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: white;">
-                    <img src="images/ink.png" class="img-ink"/>
-                    <label class="lbl-ink">BIANCO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: yellow;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">GIALLO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: orange;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">ARANCIONE</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: red;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">ROSSO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: fuchsia;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">FUCHSIA</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: pink;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">ROSA</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: #5C2E91;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">VIOLA</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: darkblue;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">BLU SCURO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: blue;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">BLU</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: lightblue;">
-                    <img src="images/ink.png"  class="img-ink" />
-                    <label class="lbl-ink">AZZURRO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: greenyellow;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">VERDE CHIARO</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: green;">
-                    <img src="images/ink.png" class="img-ink" />
-                    <label class="lbl-ink">VERDE</label>
-                </button>
-                <button type="button" class="btn btn-ink" style="background-color: maroon;">
-                    <img src="images/ink.png"  class="img-ink" />
-                    <label class="lbl-ink">MARRONE</label>
-                </button>
-                <button type="button" class="btn btn-ink" id="btnColors" style="background-color: white;">
-                    <img src="images/colors.png"  class="img-ink" />
-                    <input type="color" id="inputColor" style="display:none;" />
-                </button>
-       </div>
-    </footer>
+            -->
+            <div class="color-grid" id="colorGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        const gridCanvas = document.getElementById('gridCanvas');
+        const gridCtx = gridCanvas.getContext('2d');
+        
+        let currentColor = 'black';
+        let brushSize = 2; // rem
+        let isDrawing = false;
+        let showGrid = false;
+        let activePointers = new Map();
+
+        // Inizializza canvas
+        function initCanvas() {
+            const container = document.getElementById('canvasContainer');
+            const rect = container.getBoundingClientRect();
+            
+            canvas.width = rect.width - 32;
+            canvas.height = rect.height - 32;
+            
+            gridCanvas.width = canvas.width;
+            gridCanvas.height = canvas.height;
+            
+            const canvasRect = canvas.getBoundingClientRect();
+            gridCanvas.style.left = canvasRect.left + 'px';
+            gridCanvas.style.top = canvasRect.top + 'px';
+            
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            updateBrushPreview();
+        }
+
+        // Previeni zoom e scroll
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener('gesturestart', (e) => {
+            e.preventDefault();
+        });
+
+        // Funzioni pennello
+        function updateBrushPreview() {
+            const preview = document.getElementById('brushPreview');
+            const size = brushSize * 16; // converti rem in px
+            preview.style.width = size + 'px';
+            preview.style.height = size + 'px';
+            preview.style.background = currentColor;
+        }
+
+        function increaseBrushSize() {
+            if (brushSize < 5) {
+                brushSize += 0.5;
+                updateBrushPreview();
+            }
+        }
+
+        function decreaseBrushSize() {
+            if (brushSize > 0.5) {
+                brushSize -= 0.5;
+                updateBrushPreview();
+            }
+        }
+
+        // Funzioni colore
+        function selectColor(color) {
+            currentColor = color;
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-color="${color}"]`).classList.add('active');
+            document.getElementById('eraserBtn').classList.remove('active');
+            updateBrushPreview();
+        }
+
+        function selectEraser() {
+            currentColor = 'white';
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('eraserBtn').classList.add('active');
+            updateBrushPreview();
+        }
+
+        // Multitouch drawing
+        function getPointerPosition(e, pointerId) {
+            const rect = canvas.getBoundingClientRect();
+            const touch = Array.from(e.touches).find(t => t.identifier === pointerId);
+            if (touch) {
+                return {
+                    x: touch.clientX - rect.left,
+                    y: touch.clientY - rect.top
+                };
+            }
+            return null;
+        }
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            for (let touch of e.changedTouches) {
+                const pos = getPointerPosition(e, touch.identifier);
+                if (pos) {
+                    activePointers.set(touch.identifier, pos);
+                }
+            }
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            for (let touch of e.changedTouches) {
+                const lastPos = activePointers.get(touch.identifier);
+                const pos = getPointerPosition(e, touch.identifier);
+                
+                if (lastPos && pos) {
+                    ctx.strokeStyle = currentColor;
+                    ctx.lineWidth = brushSize * 16;
+                    ctx.beginPath();
+                    ctx.moveTo(lastPos.x, lastPos.y);
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                    
+                    activePointers.set(touch.identifier, pos);
+                }
+            }
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            for (let touch of e.changedTouches) {
+                activePointers.delete(touch.identifier);
+            }
+        });
+
+        canvas.addEventListener('touchcancel', (e) => {
+            e.preventDefault();
+            for (let touch of e.changedTouches) {
+                activePointers.delete(touch.identifier);
+            }
+        });
+
+        // Mouse support per testing su desktop
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            const pos = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            activePointers.set('mouse', pos);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const pos = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            const lastPos = activePointers.get('mouse');
+            
+            if (lastPos) {
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = brushSize * 16;
+                ctx.beginPath();
+                ctx.moveTo(lastPos.x, lastPos.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            }
+            
+            activePointers.set('mouse', pos);
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+            activePointers.delete('mouse');
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDrawing = false;
+            activePointers.delete('mouse');
+        });
+
+        // Griglia
+        function toggleGrid() {
+            showGrid = !showGrid;
+            const gridText = document.getElementById('gridText');
+            
+            if (showGrid) {
+                drawGrid();
+                gridText.textContent = 'Griglia Si';
+            } else {
+                gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+                gridText.textContent = 'Griglia No';
+            }
+        }
+
+        function drawGrid() {
+            const cellSize = 2 * 16; // 2rem in px
+            gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+            gridCtx.strokeStyle = '#e0e0e0';
+            gridCtx.lineWidth = 1;
+
+            // Inizia da 0 per allineare la griglia all'angolo superiore sinistro
+            for (let x = 0; x <= gridCanvas.width; x += cellSize) {
+                gridCtx.beginPath();
+                gridCtx.moveTo(x, 0);
+                gridCtx.lineTo(x, gridCanvas.height);
+                gridCtx.stroke();
+            }
+
+            for (let y = 0; y <= gridCanvas.height; y += cellSize) {
+                gridCtx.beginPath();
+                gridCtx.moveTo(0, y);
+                gridCtx.lineTo(gridCanvas.width, y);
+                gridCtx.stroke();
+            }
+        }
+
+        // Pulisci canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Salva disegno
+        function saveDrawing() {
+            const now = new Date();
+            const filename = `Disegno_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}.png`;
+            
+            html2canvas(canvas).then(canvas => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+        // Color Picker Modal
+        function openColorPicker() {
+            const modal = document.getElementById('colorModal');
+            modal.classList.add('show');
+            generateColorGrid();
+        }
+
+        document.getElementById('colorModal').addEventListener('click', function(event){
+            if(event.target == this){
+                 closeColorPicker();
+            }
+        });
+
+        function closeColorPicker() {
+            const modal = document.getElementById('colorModal');
+            modal.classList.remove('show');
+        }
+
+        function generateColorGrid() {
+            const grid = document.getElementById('colorGrid');
+            grid.innerHTML = '';
+            
+            const colors = [];
+            
+            // Genera griglia di colori
+            for (let h = 0; h < 360; h += 20) {
+                for (let s = 100; s >= 30; s -= 35) {
+                    for (let l = 50; l <= 80; l += 30) {
+                        colors.push(`hsl(${h}, ${s}%, ${l}%)`);
+                    }
+                }
+            }
+            
+            // Aggiungi grigi
+            for (let i = 0; i <= 100; i += 10) {
+                colors.push(`hsl(0, 0%, ${i}%)`);
+            }
+            
+            colors.forEach(color => {
+                const item = document.createElement('div');
+                item.className = 'color-grid-item';
+                item.style.background = color;
+                item.onclick = () => {
+                    currentColor = color;
+                    document.querySelectorAll('.color-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.getElementById('eraserBtn').classList.remove('active');
+                    updateBrushPreview();
+                    closeColorPicker();
+                };
+                grid.appendChild(item);
+            });
+        }
+
+        // Resize
+        window.addEventListener('resize', initCanvas);
+        
+        // Inizializza
+        initCanvas();
+    </script>
 </body>
 </html>
