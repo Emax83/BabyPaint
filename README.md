@@ -2,6 +2,8 @@
 
 Un'applicazione di disegno semplice e divertente pensata per i bambini, ottimizzata per tablet in modalità landscape.
 
+Provala online!: https://baby-paint.vercel.app/
+
 ![BabyPaint Screenshot](screenshot.png)
 
 ## ✨ Caratteristiche
