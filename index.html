@@ -703,10 +703,11 @@
         }
 
         // Resize
-        window.addEventListener('resize', initCanvas);
+        window.addEventListener('resize', ()=>{ initCanvas; drawGrid(); });
         
         // Inizializza
         initCanvas();
     </script>
 </body>
+
 </html>
