@@ -274,6 +274,8 @@
             max-height: 80%;
             overflow-y: auto;
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            overflow: auto;
+            max-height: 60vh;
         }
 
         .modal-header {
@@ -305,7 +307,9 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
             gap: 0.5rem;
-            max-width: 600px;
+            /*max-width: 600px;*/
+            overflow-x: auto;
+            width:100vw;
         }
 
         .color-grid-item {
@@ -343,7 +347,7 @@
     </style>
 </head>
 <body>
-    <!-- Toolbar -->
+    <!-- Toolbar 
     <div class="toolbar">
         <div class="logo"><img src="images/logo.png" width="32"></div>
         <button class="btn btn-new" onclick="clearCanvas()">
@@ -365,6 +369,7 @@
             <i class="bi bi-plus-lg"></i>
         </button>
     </div>
+    -->
 
     <!-- Canvas Area -->
     <div class="canvas-container" id="canvasContainer">
@@ -374,18 +379,40 @@
 
     <!-- Color Bar -->
     <div class="color-bar">
+        <div class="logo"><img src="images/logo.png" width="32"></div>
+        <button class="btn btn-new" onclick="clearCanvas()">
+            <i class="bi bi-file-earmark-plus"></i>
+        </button>
+        <button class="btn btn-save" onclick="saveDrawing()">
+            <i class="bi bi-download"></i>
+        </button>
+        <button class="btn btn-grid" onclick="toggleGrid()">
+            <i class="bi bi-grid-3x3"></i> <span id="gridText">Griglia No</span>
+        </button>
+        <button class="btn btn-size" onclick="decreaseBrushSize()">
+            <i class="bi bi-dash-lg"></i>
+        </button>
+        <div class="brush-preview">
+            <div class="brush-circle" id="brushPreview"></div>
+        </div>
+        <button class="btn btn-size" onclick="increaseBrushSize()">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+        <!--
         <div class="eraser-btn" onclick="selectEraser()" id="eraserBtn">
             <i class="bi bi-eraser"></i>
         </div>
+        -->
+        <div class="color-btn" style="background: white; border-color: #333;" onclick="selectColor('white')" data-color="white"></div>
         <div class="color-btn active" style="background: black;" onclick="selectColor('black')" data-color="black"></div>
         <div class="color-btn" style="background: gray;" onclick="selectColor('gray')" data-color="gray"></div>
-        <div class="color-btn" style="background: white; border-color: #333;" onclick="selectColor('white')" data-color="white"></div>
         <div class="color-btn" style="background: yellow;" onclick="selectColor('yellow')" data-color="yellow"></div>
         <div class="color-btn" style="background: orange;" onclick="selectColor('orange')" data-color="orange"></div>
         <div class="color-btn" style="background: red;" onclick="selectColor('red')" data-color="red"></div>
         <div class="color-btn" style="background: brown;" onclick="selectColor('brown')" data-color="brown"></div>
         <div class="color-btn" style="background: green;" onclick="selectColor('green')" data-color="green"></div>
         <div class="color-btn" style="background: purple;" onclick="selectColor('purple')" data-color="purple"></div>
+        <div class="color-btn" style="background: pink;" onclick="selectColor('pink')" data-color="pink"></div>
         <div class="color-btn" style="background: blue;" onclick="selectColor('blue')" data-color="blue"></div>
         <div class="color-btn" style="background: lightblue;" onclick="selectColor('lightblue')" data-color="lightblue"></div>
         <div class="multicolor-btn" onclick="openColorPicker()">
@@ -711,3 +738,4 @@
 </body>
 
 </html>
+
