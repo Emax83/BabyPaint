@@ -70,9 +70,7 @@
             flex-direction: column;
         }
 
-        #drawingCanvas {
-            touch-action: none;
-        }
+       
         
         .color-bar, .color-bar * {
             touch-action: pan-x !important;
@@ -176,6 +174,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             cursor: crosshair;
             touch-action: none;
+            z-index:10;
         }
 
         .grid-canvas {
@@ -811,3 +810,4 @@
     </script>
 </body>
 </html>
+
