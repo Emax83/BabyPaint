@@ -52,47 +52,34 @@
             flex-direction: column;
         }
 
-        .toolbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 100;
-            flex-wrap: wrap;
-        }
-
         .logo {
             width: 50px;
             height: 50px;
-            background: white;
-            border-radius: 10px;
+            background: none;
+            border-radius: 0px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: #667eea;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
+            /*box-shadow: 0 2px 4px rgba(0,0,0,0.2);*/
         }
 
         .btn {
-            padding: 0.75rem 1.25rem;
+            padding: 0.75rem;
             border: none;
             border-radius: 12px;
             font-family: 'Comic Sans MS', cursive;
-            font-size: 1rem;
-            font-weight: bold;
+            font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
         }
 
         .btn:active {
@@ -117,17 +104,13 @@
         .btn-size {
             background: white;
             color: #333;
-            padding: 0.75rem;
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .brush-preview {
-            width: 4rem;
-            height: 3rem;
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            min-height: 50px;
             background: white;
             border-radius: 8px;
             display: flex;
@@ -141,6 +124,7 @@
             background: #333;
             border-radius: 50%;
             transition: all 0.3s;
+            border: solid 1px #000;
         }
 
         .canvas-container {
@@ -148,25 +132,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 0px;
-            margin-bottom: 80px;
             padding: 1rem;
             position: relative;
-            z-index: 1;
-            background-color: #fff;
+            margin-bottom: 80px;
         }
 
         #drawingCanvas {
-            background: rgba(255, 255, 255, 0);
+            background: white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             cursor: crosshair;
             touch-action: none;
-            position: absolute;
-            z-index: 10;
         }
 
         .grid-canvas {
-            /*position: absolute;*/
+            position: absolute;
             pointer-events: none;
             z-index: 1;
         }
@@ -179,22 +158,39 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 0.75rem;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             gap: 0.75rem;
             box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
             z-index: 100;
             flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
         }
-
-        .color-bar * {
-            display: inline-block;
-            min-width: 50px;
+        
+        .color-bar::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .color-bar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .color-bar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+        }
+        
+        .color-bar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
         }
 
         .color-btn {
             width: 3.5rem;
+            min-width: 3.5rem;
             height: 3.5rem;
+            min-height: 3.5rem;
             border: 3px solid white;
             border-radius: 50%;
             cursor: pointer;
@@ -212,31 +208,12 @@
             border-color: #ffd43b;
         }
 
-        .eraser-btn {
-            background: white;
-            width: 3.5rem;
-            height: 3.5rem;
-            border: 3px solid #333;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .eraser-btn:hover, .eraser-btn.active {
-            transform: scale(1.15);
-            border-color: #ffd43b;
-            border-width: 4px;
-        }
-
         .multicolor-btn {
             background: linear-gradient(45deg, red, yellow, lime, cyan, blue, magenta, red);
             width: 3.5rem;
             height: 3.5rem;
+            min-width: 3.5rem;
+            min-height: 3.5rem;
             border: 3px solid white;
             border-radius: 50%;
             cursor: pointer;
@@ -276,11 +253,9 @@
             border-radius: 20px;
             padding: 2rem;
             max-width: 90%;
-            max-height: 80%;
+            max-height: 80vh;
             overflow-y: auto;
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            overflow: auto;
-            max-height: 60vh;
         }
 
         .modal-header {
@@ -312,9 +287,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
             gap: 0.5rem;
-            /*max-width: 600px;*/
-            overflow-x: auto;
-            width:100vw;
+            max-width: 600px;
         }
 
         .color-grid-item {
@@ -333,49 +306,25 @@
         }
 
         @media (max-width: 768px) {
-            .toolbar {
+            .color-bar {
                 padding: 0.5rem;
                 gap: 0.5rem;
             }
             
-            .btn {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.9rem;
-            }
-            
-            .logo {
+            .btn, .logo, .brush-preview {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
+            }
+            
+            .color-btn, .multicolor-btn {
+                width: 3rem;
+                height: 3rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Toolbar 
-    <div class="toolbar">
-        <div class="logo"><img src="images/logo.png" width="32"></div>
-        <button class="btn btn-new" onclick="clearCanvas()">
-            <i class="bi bi-file-earmark-plus"></i> Nuovo
-        </button>
-        <button class="btn btn-save" onclick="saveDrawing()">
-            <i class="bi bi-download"></i> Salva
-        </button>
-        <button class="btn btn-grid" onclick="toggleGrid()">
-            <i class="bi bi-grid-3x3"></i> <span id="gridText">Griglia No</span>
-        </button>
-        <button class="btn btn-size" onclick="decreaseBrushSize()">
-            <i class="bi bi-dash-lg"></i>
-        </button>
-        <div class="brush-preview">
-            <div class="brush-circle" id="brushPreview"></div>
-        </div>
-        <button class="btn btn-size" onclick="increaseBrushSize()">
-            <i class="bi bi-plus-lg"></i>
-        </button>
-    </div>
-    -->
-
     <!-- Canvas Area -->
     <div class="canvas-container" id="canvasContainer">
         <canvas id="gridCanvas" class="grid-canvas"></canvas>
@@ -384,14 +333,14 @@
 
     <!-- Color Bar -->
     <div class="color-bar">
-        <div class="logo"><img src="images/logo.png" width="32"></div>
+        <div class="logo">🎨</div>
         <button class="btn btn-new" onclick="clearCanvas()">
             <i class="bi bi-file-earmark-plus"></i>
         </button>
         <button class="btn btn-save" onclick="saveDrawing()">
             <i class="bi bi-download"></i>
         </button>
-        <button class="btn btn-grid" onclick="toggleGrid()">
+        <button class="btn btn-grid" onclick="toggleGrid()" title="Griglia">
             <i class="bi bi-grid-3x3"></i>
         </button>
         <button class="btn btn-size" onclick="decreaseBrushSize()">
@@ -403,21 +352,22 @@
         <button class="btn btn-size" onclick="increaseBrushSize()">
             <i class="bi bi-plus-lg"></i>
         </button>
-        <!--
-        <div class="eraser-btn" onclick="selectEraser()" id="eraserBtn">
-            <i class="bi bi-eraser"></i>
-        </div>
-        -->
-        <div class="color-btn" style="background: white; border-color: #333;" onclick="selectColor('white')" data-color="white"></div>
+        
+        <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3); margin: 0 0.5rem;"></div>
+        
         <div class="color-btn active" style="background: black;" onclick="selectColor('black')" data-color="black"></div>
         <div class="color-btn" style="background: gray;" onclick="selectColor('gray')" data-color="gray"></div>
+        <div class="color-btn" style="background: white; border-color: #333;" onclick="selectColor('white')" data-color="white"></div>
         <div class="color-btn" style="background: yellow;" onclick="selectColor('yellow')" data-color="yellow"></div>
         <div class="color-btn" style="background: orange;" onclick="selectColor('orange')" data-color="orange"></div>
         <div class="color-btn" style="background: red;" onclick="selectColor('red')" data-color="red"></div>
-        <div class="color-btn" style="background: brown;" onclick="selectColor('brown')" data-color="brown"></div>
+        <div class="color-btn" style="background: rgb(58, 30, 30);" onclick="selectColor('rgb(58, 30, 30)')" data-color="rgb(58, 30, 30)"></div>
+        <div class="color-btn" style="background: rgb(0, 56, 0);" onclick="selectColor('rgb(0, 56, 0)')" data-color="rgb(0, 56, 0)"></div>
         <div class="color-btn" style="background: green;" onclick="selectColor('green')" data-color="green"></div>
-        <div class="color-btn" style="background: purple;" onclick="selectColor('purple')" data-color="purple"></div>
         <div class="color-btn" style="background: pink;" onclick="selectColor('pink')" data-color="pink"></div>
+        <div class="color-btn" style="background: purple;" onclick="selectColor('purple')" data-color="purple"></div>
+        <div class="color-btn" style="background: rgb(46, 0, 83);" onclick="selectColor('rgb(46, 0, 83)')" data-color="rgb(46, 0, 83)"></div>
+        <div class="color-btn" style="background: rgb(0, 0, 59);" onclick="selectColor('rgb(0, 0, 59)')" data-color="rgb(0, 0, 59)"></div>
         <div class="color-btn" style="background: blue;" onclick="selectColor('blue')" data-color="blue"></div>
         <div class="color-btn" style="background: lightblue;" onclick="selectColor('lightblue')" data-color="lightblue"></div>
         <div class="multicolor-btn" onclick="openColorPicker()">
@@ -430,6 +380,7 @@
         <div class="modal-content">
             <!--
             <div class="modal-header">
+                <h2>Scegli un colore</h2>
                 <button class="close-btn" onclick="closeColorPicker()">
                     <i class="bi bi-x-lg"></i>
                 </button>
@@ -439,7 +390,7 @@
         </div>
     </div>
 
-    <script>
+     <script>
         const canvas = document.getElementById('drawingCanvas');
         const ctx = canvas.getContext('2d');
         const gridCanvas = document.getElementById('gridCanvas');
@@ -470,6 +421,10 @@
             ctx.lineJoin = 'round';
             
             updateBrushPreview();
+            
+            if (showGrid) {
+                drawGrid();
+            }
         }
 
         // Previeni zoom e scroll
@@ -512,17 +467,10 @@
             document.querySelectorAll('.color-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            document.querySelector(`[data-color="${color}"]`).classList.add('active');
-            document.getElementById('eraserBtn').classList.remove('active');
-            updateBrushPreview();
-        }
-
-        function selectEraser() {
-            currentColor = 'white';
-            document.querySelectorAll('.color-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById('eraserBtn').classList.add('active');
+            const btn = document.querySelector(`[data-color="${color}"]`);
+            if (btn) {
+                btn.classList.add('active');
+            }
             updateBrushPreview();
         }
 
@@ -628,14 +576,11 @@
         // Griglia
         function toggleGrid() {
             showGrid = !showGrid;
-            const gridText = document.getElementById('gridText');
             
             if (showGrid) {
                 drawGrid();
-                gridText.textContent = 'Griglia Si';
             } else {
                 gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
-                gridText.textContent = 'Griglia No';
             }
         }
 
@@ -686,16 +631,17 @@
             generateColorGrid();
         }
 
-        document.getElementById('colorModal').addEventListener('click', function(event){
-            if(event.target == this){
-                 closeColorPicker();
-            }
-        });
-
         function closeColorPicker() {
             const modal = document.getElementById('colorModal');
             modal.classList.remove('show');
         }
+
+        document.getElementById('colorModal').addEventListener('click',function(){
+            if(event.target == this){
+                event.preventDefault();
+                closeColorPicker();
+            }
+        });
 
         function generateColorGrid() {
             const grid = document.getElementById('colorGrid');
@@ -726,7 +672,6 @@
                     document.querySelectorAll('.color-btn').forEach(btn => {
                         btn.classList.remove('active');
                     });
-                    document.getElementById('eraserBtn').classList.remove('active');
                     updateBrushPreview();
                     closeColorPicker();
                 };
@@ -735,7 +680,7 @@
         }
 
         // Resize
-        window.addEventListener('resize', ()=>{ initCanvas; drawGrid(); });
+        window.addEventListener('resize', initCanvas);
         
         // Inizializza
         initCanvas();
@@ -743,7 +688,3 @@
 </body>
 
 </html>
-
-
-
-
