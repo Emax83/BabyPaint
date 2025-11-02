@@ -65,12 +65,17 @@
             overflow: hidden;
             background: #f0f0f0;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
         }
 
         #drawingCanvas {
             touch-action: none;
+        }
+        
+        .color-bar, .color-bar * {
+            touch-action: pan-x !important;
         }
 
         .logo {
@@ -160,9 +165,10 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
+            padding-bottom: 100px;
             position: relative;
-            margin-bottom: 100px;
             background: white;
+            overflow: hidden;
         }
 
         #drawingCanvas {
@@ -646,6 +652,17 @@
         // Pulisci canvas
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Rimuovi immagine di sfondo
+            const bgImage = document.getElementById('backgroundImage');
+            if (bgImage) {
+                bgImage.style.display = 'none';
+                bgImage.src = '';
+            }
+            backgroundImageElement = null;
+            
+            // Ripristina sfondo bianco del canvas
+            canvas.style.background = 'white';
         }
 
         // Fullscreen
@@ -695,7 +712,14 @@
                     backgroundImageElement = document.getElementById('backgroundImage');
                     backgroundImageElement.src = event.target.result;
                     backgroundImageElement.style.display = 'block';
-                    positionBackgroundImage();
+                    
+                    // Rendi il canvas trasparente quando c'è un'immagine
+                    canvas.style.background = 'transparent';
+                    
+                    // Aspetta che l'immagine sia caricata prima di posizionarla
+                    backgroundImageElement.onload = () => {
+                        positionBackgroundImage();
+                    };
                 };
                 reader.readAsDataURL(file);
             }
