@@ -773,7 +773,7 @@
         }
 
         const modalBack = document.getElementById('colorModal');
-        modalBack.addEventListener('click', (event)=>{
+        modalBack.addEventListener('click', function(event) {
             it(event.target == this){
                 event.preventDefault();
                 closeColorPicker();
@@ -825,6 +825,7 @@
     </script>
 </body>
 </html>
+
 
 
 
