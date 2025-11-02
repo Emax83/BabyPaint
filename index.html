@@ -40,7 +40,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            touch-action: none;
+            /*touch-action: none;*/
+        }
+
+        #drawingCanvas {
+            touch-action: none; /* Solo sul canvas */
         }
 
         body {
@@ -166,6 +170,12 @@
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* Importante per iOS */
+    touch-action: pan-x; /* Permette scroll orizzontale */
+}
+
+.color-bar * {
+    touch-action: auto; /* Permette touch sui figli */
 }
 
 .color-bar::-webkit-scrollbar {
@@ -689,6 +699,7 @@
 </body>
 
 </html>
+
 
 
 
