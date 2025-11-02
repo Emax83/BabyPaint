@@ -738,8 +738,17 @@
             backgroundImageElement.style.position = 'absolute';
             backgroundImageElement.style.left = '0px';
             backgroundImageElement.style.top = '0px';
-            backgroundImageElement.style.width = '100vw';
-            backgroundImageElement.style.height = 'auto';
+
+            let islandscape = false;
+            if(window.document.body.clientHeight > window.document.body.clientWidth){
+                backgroundImageElement.style.width = '100vw';
+                backgroundImageElement.style.height = 'auto';
+            }
+            else {
+                backgroundImageElement.style.width = 'auto';
+                backgroundImageElement.style.height = '100vh';
+             }
+            
             backgroundImageElement.style.zIndex = '1';
         }
 
@@ -825,6 +834,7 @@
     </script>
 </body>
 </html>
+
 
 
 
