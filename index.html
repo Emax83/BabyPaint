@@ -416,12 +416,14 @@
     <!-- Color Picker Modal -->
     <div class="modal" id="colorModal">
         <div class="modal-content">
+            <!--
             <div class="modal-header">
                 <h2>Scegli un colore</h2>
                 <button class="close-btn" onclick="closeColorPicker()">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
+            -->
             <div class="color-grid" id="colorGrid"></div>
         </div>
     </div>
@@ -770,6 +772,14 @@
             modal.classList.remove('show');
         }
 
+        const modalBack = document.getElementById('colorModal');
+        modalBack.addEventListener('click', (event)=>{
+            it(event.target == this){
+                event.preventDefault();
+                closeColorPicker();
+            }
+        });
+
         function generateColorGrid() {
             const grid = document.getElementById('colorGrid');
             grid.innerHTML = '';
@@ -805,6 +815,7 @@
                 grid.appendChild(item);
             });
         }
+        
 
         // Resize
         window.addEventListener('resize', initCanvas);
@@ -814,6 +825,7 @@
     </script>
 </body>
 </html>
+
 
 
 
