@@ -59,6 +59,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        touch-action: none;
     }
 
     body {
@@ -68,10 +69,6 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-    }
-
-    #drawingCanvas {
-        touch-action: none;
     }
 
     .logo {
@@ -176,7 +173,7 @@
     .grid-canvas {
         position: absolute;
         pointer-events: none;
-        z-index: 3;
+        z-index: 1;
     }
 
     .color-bar {
@@ -350,7 +347,6 @@
         }
     }
 </style>
-
 
 </head>
 <body>
@@ -712,13 +708,10 @@
         const container = document.getElementById('canvasContainer');
         const containerRect = container.getBoundingClientRect();
         
-        // Posiziona l'immagine esattamente sotto il canvas
-        backgroundImageElement.style.position = 'absolute';
         backgroundImageElement.style.left = (canvasRect.left - containerRect.left) + 'px';
         backgroundImageElement.style.top = (canvasRect.top - containerRect.top) + 'px';
         backgroundImageElement.style.width = canvas.width + 'px';
         backgroundImageElement.style.height = canvas.height + 'px';
-        backgroundImageElement.style.zIndex = '1';
     }
 
     // Salva disegno
