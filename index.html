@@ -9,7 +9,7 @@
 <title>BabyPaint - Disegno per Bambini | App Gratuita per Tablet</title>
 <meta name="description" content="BabyPaint - Applicazione di disegno semplice e divertente per bambini. Disegna con più dita, scegli tra tanti colori, salva i tuoi capolavori. Ottimizzata per tablet in modalità landscape.">
 <meta name="keywords" content="disegno bambini, app disegno tablet, paint bambini, disegno digitale, canvas html5, multitouch drawing, app educativa, disegno touch, pittura bambini, baby paint, kids drawing app, disegno prescolare, tablet bambini, app creativa, colorare online, disegno gratis">
-<meta name="author" content="emax83dev">
+<meta name="author" content="Emax83">
 <meta name="robots" content="index, follow">
 <meta name="language" content="Italian">
 
@@ -59,7 +59,6 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        touch-action: none;
     }
 
     body {
@@ -69,6 +68,10 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
+    }
+
+    #drawingCanvas {
+        touch-action: none;
     }
 
     .logo {
@@ -173,7 +176,7 @@
     .grid-canvas {
         position: absolute;
         pointer-events: none;
-        z-index: 1;
+        z-index: 3;
     }
 
     .color-bar {
@@ -347,6 +350,7 @@
         }
     }
 </style>
+```
 
 </head>
 <body>
@@ -357,7 +361,6 @@
         <canvas id="drawingCanvas"></canvas>
     </div>
 
-```
 <!-- Hidden file input -->
 <input type="file" id="imageInput" accept="image/*" style="display: none;">
 
@@ -709,10 +712,13 @@
         const container = document.getElementById('canvasContainer');
         const containerRect = container.getBoundingClientRect();
         
+        // Posiziona l'immagine esattamente sotto il canvas
+        backgroundImageElement.style.position = 'absolute';
         backgroundImageElement.style.left = (canvasRect.left - containerRect.left) + 'px';
         backgroundImageElement.style.top = (canvasRect.top - containerRect.top) + 'px';
         backgroundImageElement.style.width = canvas.width + 'px';
         backgroundImageElement.style.height = canvas.height + 'px';
+        backgroundImageElement.style.zIndex = '1';
     }
 
     // Salva disegno
