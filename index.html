@@ -155,18 +155,19 @@
             bottom: 0;
             left: 0;
             width: 100vw;
-            white-spaces: nowrap;
+            white-space: nowrap;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 0.75rem;
             box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
             z-index: 100;
             flex-wrap: nowrap;
-            overflow-x: scroll;
+            overflow-x: auto;
             overflow-y: hidden;
         }
 
         .color-bar *{
             display: inline-block;
+            vertical-align: middle;
         }
         
         .color-bar::-webkit-scrollbar {
@@ -689,6 +690,7 @@
 </body>
 
 </html>
+
 
 
 
