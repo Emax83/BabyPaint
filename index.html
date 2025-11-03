@@ -730,6 +730,7 @@
                     // Aspetta che l'immagine sia caricata prima di posizionarla
                     backgroundImageElement.onload = () => {
                         positionBackgroundImage();
+                        requestAnimationFrame(() => positionBackgroundImage()); // doppio passaggio
                     };
 
                     backgroundImageElement.src = event.target.result;
@@ -743,7 +744,7 @@
         function positionBackgroundImage() {
             if (!backgroundImageElement) return;
             if (!backgroundImageElement.naturalWidth) return;
-            
+
             const canvasRect = canvas.getBoundingClientRect();
             const container = document.getElementById('canvasContainer');
             const containerRect = container.getBoundingClientRect();
