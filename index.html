@@ -79,8 +79,8 @@
         .logo {
             width: 50px;
             height: 50px;
-            background: none;
-            border-radius: 0px;
+            background: white;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -130,11 +130,12 @@
         .btn-fullscreen {
             background: #339af0;
             color: white;
+            display: none;
         }
 
-        .btn-size {
-            background: white;
-            color: #333;
+        .btn-open {
+            background: #9775fa;
+            color: white;
         }
 
         .brush-preview {
@@ -147,7 +148,6 @@
             justify-content: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             overflow: hidden;
-            border: 1px solid black;
             flex-shrink: 0;
         }
 
@@ -155,7 +155,7 @@
             background: #333;
             border-radius: 50%;
             transition: all 0.3s;
-            border: solid 1px #000;
+            border: 1px solid black;
         }
 
         .canvas-container {
@@ -175,17 +175,13 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             cursor: crosshair;
             touch-action: none;
-            z-index:10;
+            z-index: 2;
         }
 
         .grid-canvas {
             position: absolute;
             pointer-events: none;
             z-index: 3;
-        }
-
-        .background-image {
-            
         }
 
         .color-bar {
@@ -226,9 +222,7 @@
 
         .color-btn {
             width: 3.5rem;
-            min-width: 3.5rem;
             height: 3.5rem;
-            min-height: 3.5rem;
             border: 3px solid white;
             border-radius: 50%;
             cursor: pointer;
@@ -243,16 +237,14 @@
         }
 
         .color-btn.active {
-            border-width: 4px;
-            border-color: #ffd43b;
+            border-width: 5px;
+            border-color: #ffc800;
         }
 
         .multicolor-btn {
             background: linear-gradient(45deg, red, yellow, lime, cyan, blue, magenta, red);
             width: 3.5rem;
             height: 3.5rem;
-            min-width: 3.5rem;
-            min-height: 3.5rem;
             border: 3px solid white;
             border-radius: 50%;
             cursor: pointer;
@@ -267,16 +259,9 @@
             flex-shrink: 0;
         }
 
-        .btn-open {
-            background: #9775fa;
-            color: white;
-        }
-
         .multicolor-btn:hover {
             transform: scale(1.15);
         }
-
-        
 
         .modal {
             display: none;
@@ -414,17 +399,14 @@
         
         <div class="color-btn active" style="background: black;" onclick="selectColor('black')" data-color="black"></div>
         <div class="color-btn" style="background: gray;" onclick="selectColor('gray')" data-color="gray"></div>
-        <div class="color-btn" style="background: white; border-color: #333;" onclick="selectColor('white')" data-color="white"></div>
+        <div class="color-btn" style="background: white;" onclick="selectColor('white')" data-color="white"></div>
         <div class="color-btn" style="background: yellow;" onclick="selectColor('yellow')" data-color="yellow"></div>
         <div class="color-btn" style="background: orange;" onclick="selectColor('orange')" data-color="orange"></div>
         <div class="color-btn" style="background: red;" onclick="selectColor('red')" data-color="red"></div>
         <div class="color-btn" style="background: pink;" onclick="selectColor('pink')" data-color="pink"></div>
         <div class="color-btn" style="background: brown;" onclick="selectColor('brown')" data-color="brown"></div>
         <div class="color-btn" style="background: green;" onclick="selectColor('green')" data-color="green"></div>
-        <div class="color-btn" style="background: pink;" onclick="selectColor('pink')" data-color="pink"></div>
         <div class="color-btn" style="background: purple;" onclick="selectColor('purple')" data-color="purple"></div>
-        <div class="color-btn" style="background: rgb(46, 0, 83);" onclick="selectColor('rgb(46, 0, 83)')" data-color="rgb(46, 0, 83)"></div>
-        <div class="color-btn" style="background: rgb(0, 0, 59);" onclick="selectColor('rgb(0, 0, 59)')" data-color="rgb(0, 0, 59)"></div>
         <div class="color-btn" style="background: blue;" onclick="selectColor('blue')" data-color="blue"></div>
         <div class="color-btn" style="background: lightblue;" onclick="selectColor('lightblue')" data-color="lightblue"></div>
         <div class="multicolor-btn" onclick="openColorPicker()">
@@ -447,7 +429,7 @@
         </div>
     </div>
 
-     <script>
+    <script>
         const canvas = document.getElementById('drawingCanvas');
         const ctx = canvas.getContext('2d');
         const gridCanvas = document.getElementById('gridCanvas');
@@ -504,22 +486,27 @@
         // Funzioni pennello
         function updateBrushPreview() {
             const preview = document.getElementById('brushPreview');
-            const size = brushSize * 16; // converti rem in px
-            preview.style.width = size + 'px';
-            preview.style.height = size + 'px';
+            //const size = brushSize * 16; // converti rem in px
+            //preview.style.width = size + 'px';
+            //preview.style.height = size + 'px';
+            brushSize = parseFloat((brushSize).toFixed(2));
+            preview.style.width = brushSize + 'rem';
+            preview.style.height = brushSize + 'rem';
             preview.style.background = currentColor;
         }
 
         function increaseBrushSize() {
             if (brushSize < 5) {
-                brushSize += 0.5;
+                //brushSize += 0.2;
+                brushSize = parseFloat((brushSize + 0.2).toFixed(2));
                 updateBrushPreview();
             }
         }
 
         function decreaseBrushSize() {
-            if (brushSize > 0.5) {
-                brushSize -= 0.5;
+            if (brushSize > 0.2) {
+                //brushSize -= 0.2;
+                brushSize = parseFloat((brushSize - 0.2).toFixed(2));
                 updateBrushPreview();
             }
         }
@@ -683,6 +670,11 @@
             
             // Ripristina sfondo bianco del canvas
             canvas.style.background = 'white';
+            
+            // Se la griglia era attiva, ridisegnala
+            if (showGrid) {
+                drawGrid();
+            }
         }
 
         // Fullscreen
@@ -749,25 +741,29 @@
         function positionBackgroundImage() {
             if (!backgroundImageElement) return;
             
-            //const canvasRect = canvas.getBoundingClientRect();
-            //const container = document.getElementById('canvasContainer');
-            //const containerRect = container.getBoundingClientRect();
+            const canvasRect = canvas.getBoundingClientRect();
+            const container = document.getElementById('canvasContainer');
+            const containerRect = container.getBoundingClientRect();
             
             // Posiziona l'immagine esattamente sotto il canvas
             backgroundImageElement.style.position = 'absolute';
-            backgroundImageElement.style.left = '0px';
-            backgroundImageElement.style.top = '0px';
+            //backgroundImageElement.style.left = (canvasRect.left - containerRect.left) + 'px';
+            //backgroundImageElement.style.top = (canvasRect.top - containerRect.top) + 'px';
+            //backgroundImageElement.style.width = canvas.width + 'px';
+            //backgroundImageElement.style.height = canvas.height + 'px';
 
-            let islandscape = false;
+            backgroundImageElement.style.left = '1rem';
+            backgroundImageElement.style.top = '1rem';
             if(window.document.body.clientHeight > window.document.body.clientWidth){
-                backgroundImageElement.style.width = '90vw';
+                backgroundImageElement.style.width = '100vw';
                 backgroundImageElement.style.height = 'auto';
             }
-            else {
+            else{
                 backgroundImageElement.style.width = 'auto';
-                backgroundImageElement.style.height = '90vh';
-             }
+                backgroundImageElement.style.height = '100vh';
+            }
             
+
             backgroundImageElement.style.zIndex = '1';
         }
 
@@ -775,38 +771,59 @@
         function saveDrawing() {
             const now = new Date();
             const filename = `Disegno_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}.png`;
-
-            let element = document.getElementById('canvasContainer');
-            if(!element){
-                element = canvas;
+            
+            // Crea un canvas temporaneo per combinare background + disegno
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Sfondo bianco
+            tempCtx.fillStyle = 'white';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            
+            // Disegna l'immagine di sfondo se presente
+            if (backgroundImageElement && backgroundImageElement.style.display !== 'none') {
+                try {
+                    tempCtx.drawImage(backgroundImageElement, 0, 0, tempCanvas.width, tempCanvas.height);
+                } catch(e) {
+                    console.log('Errore nel disegnare background:', e);
+                }
             }
-            html2canvas(element).then(element => {
-                const link = document.createElement('a');
-                link.download = filename;
-                link.href = canvas.toDataURL();
-                link.click();
-            });
+            
+            // Disegna il canvas principale sopra
+            tempCtx.drawImage(canvas, 0, 0);
+            
+            // Salva
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = tempCanvas.toDataURL('image/png');
+            link.click();
+            
+            // Pulizia
+            tempCanvas.remove();
         }
 
+        const colorModal = document.getElementById('colorModal');
         // Color Picker Modal
         function openColorPicker() {
-            const modal = document.getElementById('colorModal');
-            modal.classList.add('show');
+            //const modal = document.getElementById('colorModal');
+            colorModal.classList.add('show');
             generateColorGrid();
         }
 
         function closeColorPicker() {
-            const modal = document.getElementById('colorModal');
-            modal.classList.remove('show');
+            //const modal = document.getElementById('colorModal');
+            colorModal.classList.remove('show');
         }
 
-        const modalBack = document.getElementById('colorModal');
-        modalBack.addEventListener('click', function(event) {
-            if (event.target == this) {
+        colorModal.addEventListener('click', function(event){
+            if(this === event.target){
                 event.preventDefault();
                 closeColorPicker();
             }
         });
+        
 
         function generateColorGrid() {
             const grid = document.getElementById('colorGrid');
@@ -843,23 +860,12 @@
                 grid.appendChild(item);
             });
         }
-        
 
         // Resize
         window.addEventListener('resize', initCanvas);
-        
+
         // Inizializza
         initCanvas();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
