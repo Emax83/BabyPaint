@@ -442,6 +442,7 @@
         let showGrid = false;
         let activePointers = new Map();
         let backgroundImageElement = null;
+        let brushOpacity = 0.7; // Opacità pennello (0.0 - 1.0)
 
         // Inizializza canvas
         function initCanvas() {
@@ -555,6 +556,7 @@
                 const pos = getPointerPosition(e, touch.identifier);
                 
                 if (lastPos && pos) {
+                    ctx.globalAlpha = brushOpacity; // Applica opacità
                     ctx.strokeStyle = currentColor;
                     ctx.lineWidth = brushSize * 16;
                     ctx.beginPath();
@@ -603,6 +605,7 @@
             const lastPos = activePointers.get('mouse');
             
             if (lastPos) {
+                ctx.globalAlpha = brushOpacity; // Applica opacità
                 ctx.strokeStyle = currentColor;
                 ctx.lineWidth = brushSize * 16;
                 ctx.beginPath();
@@ -883,4 +886,5 @@
 </body>
 
 </html>
+
 
